@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    My resume
+{% endblock %}
+
+{% block main %}
+    {% if purchases|length > 0 %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Symbol</th>
+              <th scope="col">Price</th>
+              <th scope="col">Shares</th>
+              <th scope="col">Total</th>
+              <th scope="col">Current price</th>
+              <th scope="col">Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for purchase in purchases %}
+              {% if purchase.quantity > 0 %}
+                  <tr>
+                    <th scope="row">{{ purchase.symbol|upper }}</th>
+                    <td>{{ purchase.price }}</td>
+                    <td>{{ purchase.quantity }}</td>
+                    <td>{{ purchase.total }}</td>
+                    {% if purchase.current_price > purchase.price %}
+                    <td class="green-text">{{ purchase.current_price_usd }}</td>
+                    <td class="green-text">{{ purchase.profit_usd }}</td>
+                    {% elif purchase.current_price == purchase.price %}
+                    <td>{{ purchase.current_price_usd }}</td>
+                    <td>{{ purchase.profit_usd }}</td>
+                    {% else %}
+                    <td class="red-text">{{ purchase.current_price_usd }}</td>
+                    <td class="red-text">{{ purchase.profit_usd }}</td>
+                    {% endif %}
+                  </tr>
+              {% endif %}
+            {% endfor %}
+              <tr>
+                <th scope="row">CASH</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><b>{{ cash_usd }}</b></td>
+              </tr>
+          </tbody>
+        </table>
+    {% else %}
+        <h4>
+            No purchases yet!
+            <a href="/buy">Buy something</a>
+        </h4>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transactions
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Stock</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for purchase in purchases %}
+            <tr>
+              <th scope="row">{{ purchase.symbol|upper }}</th>
+              <td>{{ purchase.price }}</td>
+              <td>{{ purchase.quantity }}</td>
+              <td>{{ purchase.bought_at }}</td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}
